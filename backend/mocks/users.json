@@ -1,0 +1,6 @@
+[
+  { "name": "Daniel A. R. Farina", "email": "daniel.farina@email.com",      "password": "123mudar", "cellphone": "351 654321987" },
+  { "name": "Luiz Henrique B. O.", "email": "luiz.henrique@email.com",      "password": "123mudar", "cellphone": "351 654321987" },
+  { "name": "Gustavo Quieregato",  "email": "gustavo.quieregato@email.com", "password": "123mudar", "cellphone": "351 654321987" },
+  { "name": "Jean C. da Silva",    "email": "jean.silva@email.com",         "password": "123mudar", "cellphone": "351 654321987" }
+]

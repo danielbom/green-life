@@ -1,0 +1,7 @@
+[
+  {
+    "voluntary_id": "#(sample):voluntaries",
+    "seed_id": "#(sample):seeds",
+    "$$repeat": 2
+  }
+]

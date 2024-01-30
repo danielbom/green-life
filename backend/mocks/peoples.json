@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Marcela",
+    "email": "marcela@email.com",
+    "cellphone": "+351 236987410",
+    "birth_date": "2000-06-23",
+    "address": "Rua Mario Freitas, n 987, Venezal"
+  },
+  {
+    "name": "Marco Antonio",
+    "email": "marco.antonio@email.com",
+    "cellphone": "+351 654987321",
+    "birth_date": "1999-01-23",
+    "address": "Rua Maria Antonieta, n 456, Venezal"
+  },
+  {
+    "name": "Haruki Murakami",
+    "email": "haruki@email.com",
+    "cellphone": "+351 987654321",
+    "birth_date": "1990-01-12",
+    "address": "Rua Britanico Nova, n 100, Venezal"
+  },
+  {
+    "name": "Jorge Amado",
+    "email": "jorge@email.com",
+    "cellphone": "+351 246129875",
+    "birth_date": "1993-01-12",
+    "address": "Rua Sertenejo, n 1520, Venezal"
+  }
+]

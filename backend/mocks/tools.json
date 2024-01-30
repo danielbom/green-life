@@ -1,0 +1,23 @@
+[
+  { "name": "Enxada", "amount": 72, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Regador", "amount": 90, "description": "Importante para manter as plantas hidratadas, especialmente em dias quentes." },
+  { "name": "Tesoura de poda", "amount": 64, "description": "Utilizada para cortar galhos e folhas indesejadas, além de ajudar na colheita." },
+  { "name": "Luvas de jardinagem", "amount": 93, "description": "Protegem as mãos de espinhos, cortes e sujeira." },
+  { "name": "Régua", "amount": 16, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Trena", "amount": 15, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Carrinho de mão", "amount": 9, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Enxadrão", "amount": 96, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Pá reta", "amount": 45, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Pá curva", "amount": 44, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Forcado", "amount": 26, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Rastelo", "amount": 66, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Compressor", "amount": 19, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Sacho", "amount": 63, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Plantador", "amount": 59, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Cesta", "amount": 19, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Balde", "amount": 69, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Pulverizador", "amount": 78, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Copo medidor", "amount": 6, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Tesoura de jardinagem", "amount": 51, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." },
+  { "name": "Alicate de enxertia", "amount": 12, "description": "Ferramenta básica para preparar o solo e remover ervas daninhas." }
+]

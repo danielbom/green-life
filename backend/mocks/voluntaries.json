@@ -1,0 +1,10 @@
+[
+  {
+    "people_id": "#(sample):peoples",
+    "ground_id": "#(sample):grounds",
+    "bed_label": "#(eval):random.choice(ctx.entities['grounds'][0]['beds'])['label']",
+    "start_at": "#(date.today)",
+    "is_responsible": "#(random.bool)",
+    "$$repeat": 2
+  }
+]

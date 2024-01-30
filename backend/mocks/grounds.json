@@ -1,0 +1,18 @@
+[
+  {
+    "width": 1000,
+    "length": 2000,
+    "address": "Rua Praça Azul, n 657, Venezal",
+    "description": "Terreno da Prefeitura n. 1",
+    "beds_count": 36,
+    "owner_id": null
+  },
+  {
+    "width": 1000,
+    "length": 1500,
+    "address": "Rua Praça Amarela, n 521, Venezal",
+    "description": "Terreno da Prefeitura n. 2",
+    "beds_count": 16,
+    "owner_id": null
+  }
+]
