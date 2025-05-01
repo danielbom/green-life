@@ -1,0 +1,24 @@
+POST http://localhost:8000/api/auth/login
+Content-Type: multipart/form-data; boundary=WebKitFormBoundary
+
+--WebKitFormBoundary
+Content-Disposition: form-data; name="username"
+
+daniel.farina@email.com
+--WebKitFormBoundary
+Content-Disposition: form-data; name="password"
+
+123mudar
+--WebKitFormBoundary--
+
+HTTP/1.1 200  - OK
+date: Thu, 01 May 2025 20:48:13 GMT
+server: uvicorn
+content-length: 448
+content-type: application/json
+connection: close
+###
+GET http://localhost:8000/api/peoples/?1=1
+    &page=1
+    &page_size=10
+    &order_by=&search=

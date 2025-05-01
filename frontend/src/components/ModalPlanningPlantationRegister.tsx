@@ -48,7 +48,7 @@ export default function ModalPlanningPlantationRegister({
     setUpdated(true)
   }
 
-  function _onClose(event: 'close' | 'submit') {
+  function onCloseAndReset(event: 'close' | 'submit') {
     onClose(event, values)
     setValues([])
     setUpdated(false)
@@ -66,11 +66,11 @@ export default function ModalPlanningPlantationRegister({
                 setOpenAlert(true)
                 return
               }
-              _onClose('close')
+              onCloseAndReset('close')
               break
             }
             case 'submit': {
-              _onClose('submit')
+              onCloseAndReset('submit')
               return
             }
           }
@@ -84,7 +84,7 @@ export default function ModalPlanningPlantationRegister({
         open={openAlert}
         onClose={(event) => {
           if (event === 'yes') {
-            _onClose('close')
+            onCloseAndReset('close')
           }
           setOpenAlert(false)
         }}

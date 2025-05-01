@@ -1,4 +1,7 @@
-from datetime import datetime, timedelta
+from typing import Any
+
+from datetime import datetime, timedelta, timezone
+import hashlib
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -14,19 +17,21 @@ from api.models import User
 class TokenData(BaseModel):
     user_id: str
     type: str
+    exp: Any
     user: User
 
 
 JWT_ALGORITHM = 'HS256'
-JWT_SECRET_KEY = settings.jwt_secret
+JWT_SECRET_KEY = hashlib.sha256(settings.jwt_secret.encode()).hexdigest()
 JWT_EXPIRES_IN = settings.jwt_expires_in
 JWT_REFRESH_EXPIRES_IN = settings.jwt_refresh_expires_in
+BRAZIL_TZ = timezone(timedelta(hours=-3))
 
 oauth2_schema = OAuth2PasswordBearer(tokenUrl='/api/auth/login')
 
 
 def _create_token(data: dict, milliseconds: int, typ: str) -> str:
-    data['exp'] = datetime.now() + timedelta(milliseconds=milliseconds)
+    data['exp'] = data.get('exp') or datetime.now(tz=BRAZIL_TZ) + timedelta(milliseconds=milliseconds)
     data['typ'] = typ
     token = jwt.encode(data, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
     return token
@@ -52,7 +57,9 @@ def decode_token(token: str = Depends(oauth2_schema),
                 detail='Token expired',
                 headers={"WWW-Authenticate": "Bearer"},
             )
-        return TokenData(user_id=user_id, user=user,
+        return TokenData(user_id=user_id,
+                         exp=data['exp'],
+                         user=user,
                          type=data.get('typ', 'access_token'))
     except JWTError as e:
         raise HTTPException(

@@ -17,7 +17,7 @@ import { paths } from '../../Router'
 
 export function LoginPage() {
   const formRef = useRef<HTMLFormElement>(null)
-  const [_isLoadingAsyncAction, wrapAsyncAction] = useLoadingAsync()
+  const [isLoadingAsyncAction, wrapAsyncAction] = useLoadingAsync()
   const navigate = useNavigate()
 
   return (
@@ -26,6 +26,7 @@ export function LoginPage() {
         <LayoutInitial.Title variant="wellcome" />
         <LoginForm
           formRef={formRef}
+          isLoading={isLoadingAsyncAction}
           onSubmit={(values) =>
             wrapAsyncAction(async () => {
               try {
@@ -47,6 +48,7 @@ export function LoginPage() {
             onClick={() => {
               formRef.current?.requestSubmit()
             }}
+            disabled={isLoadingAsyncAction}
           />
           <Box sx={{ pt: 2 }} />
           <LayoutInitial.SecondaryButton
@@ -54,6 +56,7 @@ export function LoginPage() {
               navigate(paths.register)
             }}
             text="Registrar"
+            disabled={isLoadingAsyncAction}
           />
           <FormGroup
             sx={{
@@ -106,29 +109,22 @@ type Values = {
 
 type LoginFormProps = {
   formRef: RefObject<HTMLFormElement> | null
+  isLoading: boolean
   onSubmit: (values: Values) => Promise<void>
 }
 
-function LoginForm({ onSubmit, formRef }: LoginFormProps) {
+function LoginForm({ onSubmit, isLoading, formRef }: LoginFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<AuthLogin>({
     resolver: yupResolver(validation),
     defaultValues: { username: '', password: '' },
   })
 
-  async function _onSubmit(values: Values) {
-    try {
-      await onSubmit(values)
-      reset()
-    } catch (_error) {}
-  }
-
   return (
-    <form ref={formRef} onSubmit={handleSubmit((values) => _onSubmit(values))}>
+    <form ref={formRef} onSubmit={handleSubmit((values) => onSubmit(values))}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <LayoutInitial.TextContainer>
           <AccountCircleIcon />
@@ -138,6 +134,12 @@ function LoginForm({ onSubmit, formRef }: LoginFormProps) {
             label="Email"
             error={!!errors.username}
             variant="outlined"
+            disabled={isLoading}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                formRef?.current?.requestSubmit();
+              }
+            }}
           />
         </LayoutInitial.TextContainer>
         <LayoutInitial.TextContainer>
@@ -148,6 +150,12 @@ function LoginForm({ onSubmit, formRef }: LoginFormProps) {
             label="Senha"
             error={!!errors.password}
             variant="outlined"
+            disabled={isLoading}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                formRef?.current?.requestSubmit();
+              }
+            }}
           />
         </LayoutInitial.TextContainer>
         <ErrorMessage errors={[errors.username, errors.password]} />

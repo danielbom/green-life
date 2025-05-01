@@ -39,7 +39,7 @@ export default function ModalPeopleRegisterOrUpdate({
   })
   const isUpdate = !!initialValues
 
-  function _onClose(event: 'close' | 'submit', values?: any) {
+  function onCloseAndReset(event: 'close' | 'submit', values?: any) {
     onClose(event, values)
     reset()
   }
@@ -48,13 +48,13 @@ export default function ModalPeopleRegisterOrUpdate({
   useEffect(() => reset(initialValues || undefined), [initialValues, reset])
 
   return (
-    <form ref={form} onSubmit={handleSubmit((values) => _onClose('submit', values))}>
+    <form ref={form} onSubmit={handleSubmit((values) => onCloseAndReset('submit', values))}>
       <ModalRegister
         title={isUpdate ? 'Atualizar pessoa' : 'Registro de pessoa'}
         open={open}
         onClose={(event) => {
           if (event === 'close') {
-            _onClose('close')
+            onCloseAndReset('close')
           } else {
             form.current?.requestSubmit()
           }

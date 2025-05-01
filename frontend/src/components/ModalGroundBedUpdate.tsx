@@ -84,7 +84,7 @@ export default function ModalGroundBedUpdate({
     setUpdated(true)
   }
 
-  function _onClose(event: 'close' | 'submit') {
+  function onCloseAndReset(event: 'close' | 'submit') {
     onClose(event, values)
     setVoluntaries([])
     setRepresentant(null)
@@ -103,11 +103,11 @@ export default function ModalGroundBedUpdate({
                 setOpenAlert(true)
                 return
               }
-              _onClose('close')
+              onCloseAndReset('close')
               break
             }
             case 'submit': {
-              _onClose('submit')
+              onCloseAndReset('submit')
               return
             }
           }
@@ -120,7 +120,7 @@ export default function ModalGroundBedUpdate({
                 Desalocar
               </Button>
             )}
-            <Button variant="contained" onClick={() => _onClose('submit')}>
+            <Button variant="contained" onClick={() => onCloseAndReset('submit')}>
               Salvar
             </Button>
           </Box>

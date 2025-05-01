@@ -21,6 +21,10 @@ export class AuthEndpoint {
   refresh(): ApiResponse<AuthLoginResponse> {
     return this.httpClient.post('/api/auth/refresh')
   }
+
+  update(body: AuthUpdate): ApiResponse<AuthLoginResponse> {
+    return this.httpClient.post('/api/auth/update', body)
+  }
 }
 
 export type AuthLogin = {
@@ -32,4 +36,11 @@ export type AuthLoginResponse = {
   refresh_token: string
   access_token: string
   token_type: string
+}
+
+export type AuthUpdate = {
+  name?: string
+  email?: string
+  password?: string
+  cellphone?: string
 }

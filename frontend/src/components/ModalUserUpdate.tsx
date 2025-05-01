@@ -1,37 +1,54 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Box } from '@mui/material'
 import TextField from '@mui/material/TextField'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import ModalRegister, { sx as registerSx } from './ModalRegister'
+import ModalRegister from './ModalRegister'
+
+type Values = {
+  name: string
+  email: string
+  cellphone: string
+  password?: string
+  confirmPassword?: string
+}
 
 type ModalUserUpdateProps = {
   open: boolean
-  onClose: (event: 'close' | 'submit', values?: any) => void
-  defaultValues?: any
+  isLoading: boolean
+  onClose: (event: 'close' | 'submit', values?: Values) => void
+  initialValues?: Values
 }
 
-export default function ModalUserUpdate({ open, onClose, defaultValues }: ModalUserUpdateProps) {
+export default function ModalUserUpdate({ open, isLoading, onClose, initialValues }: ModalUserUpdateProps) {
   const form = useRef<HTMLFormElement>(null)
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(validation),
-    defaultValues,
+    defaultValues: initialValues,
   })
 
+  function onCloseAndReset(event: 'close' | 'submit', values?: any) {
+    onClose(event, values)
+    reset(initialValues)
+  }
+
+  // TODO: Try remove this useEffect
+  useEffect(() => reset(initialValues || undefined), [initialValues, reset])
+
   return (
-    <form ref={form} onSubmit={handleSubmit((values) => onClose('submit', values))}>
+    <form ref={form} onSubmit={handleSubmit((values) => onCloseAndReset('submit', values))}>
       <ModalRegister
         title="Editar usuário"
         open={open}
         onClose={(event) => {
           if (event === 'close') {
-            onClose('close')
+            onCloseAndReset('close')
           } else {
             form.current?.requestSubmit()
           }
@@ -46,6 +63,7 @@ export default function ModalUserUpdate({ open, onClose, defaultValues }: ModalU
           type="text"
           error={!!errors.name}
           helperText={errors.name?.message?.toString()}
+          disabled={isLoading}
         />
         <TextField
           {...register('email')}
@@ -56,30 +74,19 @@ export default function ModalUserUpdate({ open, onClose, defaultValues }: ModalU
           type="email"
           error={!!errors.email}
           helperText={errors.email?.message?.toString()}
+          disabled={isLoading}
         />
-        <Box sx={registerSx.row}>
-          <TextField
-            {...register('birthDate')}
-            variant="outlined"
-            required
-            fullWidth
-            label="Nascimento"
-            InputLabelProps={{ shrink: true }}
-            type="date"
-            error={!!errors.birthDate}
-            helperText={errors.birthDate?.message?.toString()}
-          />
-          <TextField
-            {...register('phone')}
-            variant="outlined"
-            required
-            fullWidth
-            label="Telefone"
-            type="tel"
-            error={!!errors.phone}
-            helperText={errors.phone?.message?.toString()}
-          />
-        </Box>
+        <TextField
+          {...register('cellphone')}
+          variant="outlined"
+          required
+          fullWidth
+          label="Telefone"
+          type="tel"
+          error={!!errors.cellphone}
+          helperText={errors.cellphone?.message?.toString()}
+          disabled={isLoading}
+        />
         <TextField
           {...register('password')}
           variant="outlined"
@@ -88,6 +95,7 @@ export default function ModalUserUpdate({ open, onClose, defaultValues }: ModalU
           type="password"
           error={!!errors.password}
           helperText={errors.password?.message?.toString()}
+          disabled={isLoading}
         />
         <TextField
           {...register('confirmPassword')}
@@ -97,6 +105,7 @@ export default function ModalUserUpdate({ open, onClose, defaultValues }: ModalU
           type="password"
           error={!!errors.confirmPassword}
           helperText={errors.confirmPassword?.message?.toString()}
+          disabled={isLoading}
         />
       </ModalRegister>
     </form>
@@ -106,8 +115,7 @@ export default function ModalUserUpdate({ open, onClose, defaultValues }: ModalU
 const validation = Yup.object().shape({
   name: Yup.string().required('Campo obrigatório'),
   email: Yup.string().email('Email inválido').required('Campo obrigatório'),
-  birthDate: Yup.date().typeError('Campo obrigatório').required('Campo obrigatório'),
-  phone: Yup.string().required('Campo obrigatório'),
+  cellphone: Yup.string().required('Campo obrigatório'),
   password: Yup.string(),
   confirmPassword: Yup.string().oneOf([Yup.ref('password'), null as any], 'As senhas devem ser iguais'),
 })

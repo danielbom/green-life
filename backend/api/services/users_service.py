@@ -67,6 +67,7 @@ def user_store(user: UserStore, db: Database) -> UserResponse:
     user_must_not_exists(db, email=data['email'])
     data['manager'] = {'start_at': date.today().isoformat()}
     data['password'] = crypt_service.hash_password(data['password'])
+    data['version'] = 0
     entity = db.users.insert_one(data)
     entity = db.users.find_one({"_id": ObjectId(entity.inserted_id)})
     return model_from_mongo(UserResponse, entity)
@@ -77,21 +78,21 @@ def user_update(
     update: UserUpdate,
     db: Database
 ) -> User:
-    user = user_show(user_id, db)
+    user = db.users.find_one({"_id": ObjectId(user_id)})
+    if user is None:
+        raise NotFoundError('User not found')
     data = update.dict(exclude_unset=True)
     if 'password' in data:
         data['password'] = crypt_service.hash_password(data['password'])
     if 'email' in data:
         user_must_not_exists(db, email=data['email'])
-    data['version'] = user.version + 1
+    data['version'] = user["version"] + 1
     entity = db.users.find_one_and_update(
         {"_id": ObjectId(user_id)},
         {"$set": data},
     )
-    if entity is not None:
-        return model_from_mongo(
-            User, db.users.find_one({"_id": entity["_id"]}))
-    raise NotFoundError('User not found')
+    return model_from_mongo(User, \
+            db.users.find_one({"_id": ObjectId(user_id)}))
 
 
 def user_delete(user_id: str, db: Database) -> None:

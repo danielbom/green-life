@@ -54,3 +54,18 @@ def auth_refresh(token_data: jwt_service.TokenData) -> AuthLoginResponse:
     access_token = jwt_service.create_access_token(data)
     return AuthLoginResponse(access_token=access_token,
                              refresh_token=token_data.refresh_token)
+
+
+def auth_update(
+    token_data: jwt_service.TokenData, 
+    update: users_service.UserUpdate,
+    db: Database
+) -> AuthLoginResponse:
+    user_id = token_data.user_id
+    user = users_service.user_update(user_id, update, db)
+    data = {'sub': user.id, 'version': user.version, "exp": token_data.exp}
+    access_token = jwt_service.create_access_token(data)
+    refresh_token = jwt_service.create_refresh_token(data)
+    return AuthLoginResponse(access_token=access_token,
+                             refresh_token=refresh_token)
+

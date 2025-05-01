@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Body
 from fastapi.security import OAuth2PasswordRequestForm
 
 import api.services.auth_service as auth_service
 import api.services.jwt_service as jwt_service
 from api.database import Database, get_db
 from api.services.auth_service import AuthLoginResponse, UserResponse
+from api.services.users_service import UserUpdate
 from api.services.jwt_service import TokenData
 
 router = APIRouter(prefix='/auth', tags=['Auth'])
@@ -27,3 +28,13 @@ def auth_refresh(
     token_data: TokenData = Depends(jwt_service.decode_token)
 ) -> AuthLoginResponse:
     return auth_service.auth_refresh(token_data)
+
+
+@router.post('/update')
+def auth_update(
+    update: UserUpdate = Body(...),
+    db: Database = Depends(get_db),
+    token_data: TokenData = Depends(jwt_service.decode_token),
+) -> AuthLoginResponse:
+    return auth_service.auth_update(token_data, update, db)
+
